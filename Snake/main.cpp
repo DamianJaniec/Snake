@@ -3,36 +3,68 @@
 
 #include <iostream>
 #include <vector>
+#include <windows.h>
+#include <conio.h> // _kbhit, _getch
 
 #include "Snake.h"
 #include "Board.h"
+#include "gui.h"
+
+#include "def.h"
 
 Snake snake;
 Board board;
+Display dis;
 
 
 void init();
+void game();
+
 int main()
 {
 	init();
+	game();
+
 }
 
 
 void init()
 {
+	cursor(false);
+	
+	
+	board.setSize(WIDTH, HEIGHT);
+	board.makeBoard();
+	dis.displayBoard(board);
 
+	snake.addNode();
+	snake.setNodePosRand(0); //seting head pos
+	snake.setNodeChar(0, 'X'); //setting head char
+	
 }
 
+void game()
+{
+	char key;
+
+	while (true)
+	{
+		if (_kbhit()) {
+			key = _getch();
+
+			if (key == 'w') snake.setDirr(2);
+			if (key == 's') snake.setDirr(8);
+			if (key == 'a') snake.setDirr(4);
+			if (key == 'd') snake.setDirr(6);
+			if (key == 'x') break;
+		}
+
+		snake.move(board);
 
 
+		dis.displayChgBoard(board);
+		board.updateBoard();
 
-// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
-// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
-
-// Porady dotyczące rozpoczynania pracy:
-//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
-//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
-//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
-//   4. Użyj okna Lista błędów, aby zobaczyć błędy
-//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
-//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
+		Sleep(1000); //for now, bcs im sleepy and dont see a.... nothing
+	}
+}
