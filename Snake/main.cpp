@@ -69,12 +69,16 @@ void game()
 			if (key == 'd') snake.setDirr(6);
 			if (key == 'x') break;
 		}
-
-		if (snake.move(board) == 1)
+		int collision = snake.move(board);
+		if ( collision == 1)
 		{
-			//printf("Collision");
-			//break;
+			
 			fruit.setRandomFreePos(board);
+		}
+		else if (collision == 2 || collision == 3)
+		{
+			printf("Collision");
+			break;
 		}
 
 

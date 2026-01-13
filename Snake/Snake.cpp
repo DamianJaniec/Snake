@@ -66,8 +66,11 @@ int Snake::move(Board &b)
 				grow = false;
 				col = 1;
 			}
-			else
+			else if (c == WALL_CHAR)
 				col = 2;
+			else if (c == NODE_CHAR)
+				col = 3;
+
 		}
 	}
 	
