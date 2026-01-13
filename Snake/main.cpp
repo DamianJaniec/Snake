@@ -5,16 +5,21 @@
 #include <vector>
 #include <windows.h>
 #include <conio.h> // _kbhit, _getch
+#include <time.h>
+#include <cstdlib>
+
 
 #include "Snake.h"
 #include "Board.h"
 #include "gui.h"
+#include "Point.h"
 
 #include "def.h"
 
 Snake snake;
 Board board;
 Display dis;
+Point fruit;
 
 
 void init();
@@ -31,7 +36,7 @@ int main()
 void init()
 {
 	cursor(false);
-	
+	srand(time(NULL));
 	
 	board.setSize(WIDTH, HEIGHT);
 	board.makeBoard();
@@ -39,7 +44,13 @@ void init()
 
 	snake.addNode();
 	snake.setNodePosRand(0); //seting head pos
-	snake.setNodeChar(0, 'X'); //setting head char
+	snake.setNodeChar(0, HEAD_CHAR); //setting head char
+
+	fruit.setChar(FOOD_CHAR);
+	fruit.setRandomFreePos(board);
+
+	dis.displayChgBoard(board);
+	board.updateBoard();
 	
 }
 
@@ -59,12 +70,17 @@ void game()
 			if (key == 'x') break;
 		}
 
-		snake.move(board);
+		if (snake.move(board) == 1)
+		{
+			//printf("Collision");
+			//break;
+			fruit.setRandomFreePos(board);
+		}
 
 
 		dis.displayChgBoard(board);
 		board.updateBoard();
 
-		Sleep(1000); //for now, bcs im sleepy and dont see a.... nothing
+		Sleep(200); //for now, bcs im sleepy and dont see a.... nothing
 	}
 }

@@ -16,8 +16,6 @@ std::vector<int> Point::getPos()
 }
 void Point::setRandomPos()
 {
-	srand(time(NULL));
-
 	x = rand()% (WIDTH - 2) + 1; //1...WIDTH-1
 	y = rand()% (HEIGHT - 2) + 1; // 1...HEIGHT-1;
 }
@@ -46,4 +44,13 @@ void Point::moveNode(int a)
 		y++;
 		break;
 	}
+}
+void Point::setRandomFreePos(Board &b)
+{
+	do
+	{
+		setRandomPos();
+	} while (b.getChar(x,y) != '.');
+
+	b.setChar(x, y, c);
 }

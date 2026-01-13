@@ -29,7 +29,7 @@ void Display::displayBoard(Board &b)
         for (int j = 0; j < WIDTH; j++)
         {
             gotoxy(j, i);
-            printf("%c ", b.getChar(j, i));
+            printf("%c", b.getChar(j, i));
         }
     }
 }

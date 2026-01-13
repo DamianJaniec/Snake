@@ -1,5 +1,6 @@
 #pragma once
 //one node of snake
+#include "Board.h"
 
 class Point
 {
@@ -13,4 +14,5 @@ public:
 	void setChar(char _c);
 	char getChar();
 	void moveNode(int a);
+	void setRandomFreePos(Board &b);
 };
