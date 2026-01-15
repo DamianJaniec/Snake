@@ -36,6 +36,7 @@ int main()
 void init()
 {
 	cursor(false);
+	initFont();
 	srand(time(NULL));
 	
 	board.setSize(WIDTH, HEIGHT);

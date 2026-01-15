@@ -29,7 +29,8 @@ void Display::displayBoard(Board &b)
         for (int j = 0; j < WIDTH; j++)
         {
             gotoxy(j, i);
-            printf("%c", b.getChar(j, i));
+            //printf("%c", b.getChar(j, i));
+            displayColorChar(b.getChar(j, i));
         }
     }
 }
@@ -42,9 +43,39 @@ void Display::displayChgBoard(Board& b)
             if (b.getChar(j, i) != b.getOldChar(j, i))
             {
                 gotoxy(j, i);
-                printf("%c", b.getChar(j, i));
+                displayColorChar(b.getChar(j, i));
+                //printf("%c", b.getChar(j, i));
             }
             
         }
     }
+}
+void Display::displayColorChar(char c)
+{
+    switch (c)
+    {
+    case 'X': color(HEAD_COLR); break;
+    case 'Z': color(FOOD_COLR); break;
+    case 'O': color(NODE_COLR); break;
+    case '#': color(WALL_COLR); break;
+    case '.': color(BLNK_COLR); break;
+    default: color(DFLT_COLR);  break;
+    }
+    
+    printf("%c", c);
+}
+void initFont()
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+    GetCurrentConsoleFontEx(hConsole, FALSE, &cfi);
+
+    cfi.dwFontSize.X = 16;
+    cfi.dwFontSize.Y = 16;
+    cfi.FontWeight = FW_NORMAL;
+    cfi.FontFamily = FF_MODERN;
+    wcscpy_s(cfi.FaceName, L"Terminal");
+
+    SetCurrentConsoleFontEx(hConsole, TRUE, &cfi);
 }

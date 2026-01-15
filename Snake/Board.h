@@ -18,5 +18,5 @@ public:
 
 	friend class Display;
 	friend class Snake;
-	friend class Point;
+	friend class Point;  //:) friends
 };
